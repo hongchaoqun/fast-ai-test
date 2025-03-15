@@ -37,7 +37,7 @@
 import type React from "react"
 import "@/app/globals.css"
 import { Inter } from "next/font/google"
-// import { ThemeProvider } from "@/components/theme-provider"
+import Sidebar from "@/components/ui/Sidebar"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -50,9 +50,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head />
       <body className={inter.className}>
-        {/* <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange> */}
-          {children}
-        {/* </ThemeProvider> */}
+        <div className="flex">
+          <Sidebar />
+          <main className="flex-1 p-6 w-full overflow-auto">
+            {children}
+          </main>
+        </div>
       </body>
     </html>
   )
