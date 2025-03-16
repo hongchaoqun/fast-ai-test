@@ -6,9 +6,11 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { LayoutDashboard, FileText, Database, Settings, Users, Github, X } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 export default function Sidebar() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const navigate = useRouter();
 
   return (
     <>
@@ -41,13 +43,17 @@ export default function Sidebar() {
 
         <nav className="space-y-0.5">
           {[
-            { icon: LayoutDashboard, label: "概览", active: true },
-            { icon: FileText, label: "工作台" },
-            { icon: Database, label: "知识库" },
-            { icon: Settings, label: "工具箱" },
-            { icon: Users, label: "联系" },
+            { icon: LayoutDashboard, label: "项目", url: "/", active: true },
+            { icon: FileText, label: "工作台", url: "/workspace" },
+            { icon: Database, label: "文档库", url: "/database" },
+            { icon: Settings, label: "工具箱", url: "/tools" },
+            { icon: Users, label: "联系", url: "/contact" },
           ].map((item, i) => (
-            <Button key={i} variant={item.active ? "secondary" : "ghost"} className="w-full justify-start gap-2">
+            <Button key={i} 
+              variant={item.active ? "secondary" : "ghost"} 
+              className="w-full justify-start gap-2"
+              onClick={() => navigate.push(item.url)}
+            >
               <item.icon className="h-4 w-4" />
               {item.label}
             </Button>
