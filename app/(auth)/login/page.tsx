@@ -34,7 +34,7 @@ export default function LoginPage() {
               type="submit" 
               className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300"
             >
-              登录
+              登录页面
             </Button>
           </div>
         </form>
