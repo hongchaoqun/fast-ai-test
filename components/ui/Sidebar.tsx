@@ -33,7 +33,7 @@ export default function Sidebar() {
             <Avatar className="h-8 w-8">
               <AvatarFallback>KB</AvatarFallback>
             </Avatar>
-            <span className="font-medium">我的知识库</span>
+            <span className="font-medium">Fast-ai-test</span>
           </div>
           <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setSidebarOpen(false)}>
             <X className="h-4 w-4" />
