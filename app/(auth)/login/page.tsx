@@ -4,10 +4,12 @@ import React, { useState } from 'react';
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter();
 
   // 处理登录逻辑
   const handleLogin = async (event: { preventDefault: () => void; }) => {
@@ -42,8 +44,8 @@ export default function LoginPage() {
         // 登录成功，保存 token 到 localStorage
         const { accessToken } = data.data;
         localStorage.setItem('token', accessToken);
-        alert('登录成功');
         // 可以在这里跳转到其他页面
+        router.push('/projects');
       } else {
         // 登录失败，提示错误信息
         alert(data.msg || '登录失败');

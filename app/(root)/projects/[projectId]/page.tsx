@@ -6,8 +6,7 @@ import ApiDirectory from "@/components/api-directory"
 import type { DirectoryData } from "@/lib/types"
 
 export default function ProjectPage({ params }: { params: { projectId: string } }) {
-  // Mock data - in a real app, this would come from a database
-  const projectName = params.projectId === "new-project" ? "New Project" : "E-commerce API"
+
 
   const directories: DirectoryData[] = [
     {
@@ -46,28 +45,7 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
 
   return (
     <div className="container py-10">
-      <div className="flex justify-between items-center mb-8">
-        <div>
-          <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">
-            {projectName}
-          </h1>
-          <p className="text-muted-foreground mt-1">Manage your API endpoints and documentation</p>
-        </div>
-        <div className="flex space-x-2">
-          <Link href={`/projects/${params.projectId}/directories/new`}>
-            <Button className="rounded-full shadow-sm">
-              <FolderPlus className="mr-2 h-4 w-4" />
-              New Directory
-            </Button>
-          </Link>
-          <Link href={`/projects/${params.projectId}/settings`}>
-            <Button variant="outline" className="rounded-full">
-              <Settings className="mr-2 h-4 w-4" />
-              Settings
-            </Button>
-          </Link>
-        </div>
-      </div>
+
 
       <Tabs defaultValue="directories" className="w-full">
         <TabsList className="mb-6 p-1 bg-muted/50 rounded-full">
