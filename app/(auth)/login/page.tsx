@@ -13,6 +13,11 @@ export default function LoginPage() {
   const handleLogin = async (event: { preventDefault: () => void; }) => {
     event.preventDefault(); // 阻止表单默认提交行为
 
+    const tenantName = '芋道源码';
+    const rememberMe = true;
+
+      const PATH_VARIABLE = process.env.NEXT_PUBLIC_API_URL;
+
     try {
       const response = await fetch('/api/login', {
         method: 'POST',
@@ -22,6 +27,8 @@ export default function LoginPage() {
         body: JSON.stringify({
           username,
           password,
+          tenantName,
+          rememberMe
         }),
       });
 
