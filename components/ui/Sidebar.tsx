@@ -30,10 +30,10 @@ export default function Sidebar() {
       >
         <div className="flex items-center justify-between gap-2 px-2 mb-6">
           <div className="flex items-center gap-2">
-            <Avatar className="h-8 w-8">
+            <Avatar className="h-8 w-8 text-blue-500">
               <AvatarFallback>KB</AvatarFallback>
             </Avatar>
-            <span className="font-medium">Fast-ai-test</span>
+            <span className="font-medium text-blue-500">Fast-ai-test</span>
           </div>
           <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setSidebarOpen(false)}>
             <X className="h-4 w-4" />
@@ -41,7 +41,7 @@ export default function Sidebar() {
           </Button>
         </div>
 
-        <nav className="space-y-0.5">
+        <nav className="space-y-2 py-8">
           {[
             { icon: LayoutDashboard, label: "项目", url: "/", active: true },
             { icon: FileText, label: "工作台", url: "/workspace" },
@@ -51,10 +51,10 @@ export default function Sidebar() {
           ].map((item, i) => (
             <Button key={i} 
               variant={item.active ? "secondary" : "ghost"} 
-              className="w-full justify-start gap-2"
+              className="w-full justify-start gap-2 "
               onClick={() => navigate.push(item.url)}
             >
-              <item.icon className="h-4 w-4" />
+              <item.icon className="h-4 w-4 text-blue-500" />
               {item.label}
             </Button>
           ))}

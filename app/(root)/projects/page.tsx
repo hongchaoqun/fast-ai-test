@@ -7,27 +7,27 @@ import { ProjectData } from "@/lib/types"
 export default function ProjectsPage() {
   // Mock data - in a real app, this would come from a database
   const projects: ProjectData[] = [
-    {
-      id: "1",
-      name: "E-commerce API",
-      description: "API endpoints for our e-commerce platform",
-      apiCount: 24,
-      lastUpdated: "2023-12-10T14:30:00Z",
-    },
-    {
-      id: "2",
-      name: "Mobile App Backend",
-      description: "Backend services for iOS and Android apps",
-      apiCount: 18,
-      lastUpdated: "2023-12-05T09:15:00Z",
-    },
-    {
-      id: "3",
-      name: "Analytics Service",
-      description: "Data collection and reporting APIs",
-      apiCount: 12,
-      lastUpdated: "2023-11-28T16:45:00Z",
-    },
+    // {
+    //   id: "1",
+    //   name: "E-commerce API",
+    //   description: "API endpoints for our e-commerce platform",
+    //   apiCount: 24,
+    //   lastUpdated: "2023-12-10T14:30:00Z",
+    // },
+    // {
+    //   id: "2",
+    //   name: "Mobile App Backend",
+    //   description: "Backend services for iOS and Android apps",
+    //   apiCount: 18,
+    //   lastUpdated: "2023-12-05T09:15:00Z",
+    // },
+    // {
+    //   id: "3",
+    //   name: "Analytics Service",
+    //   description: "Data collection and reporting APIs",
+    //   apiCount: 12,
+    //   lastUpdated: "2023-11-28T16:45:00Z",
+    // },
   ]
 
   return (
