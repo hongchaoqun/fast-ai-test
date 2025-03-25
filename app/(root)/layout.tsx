@@ -2,7 +2,7 @@
 
 import Sidebar from '@/components/ui/Sidebar';
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 
@@ -14,6 +14,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       router.push("/login");
     }
   }, []);
+
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen)
+  }
 
   return (
     <html lang="en">

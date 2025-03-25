@@ -4,9 +4,11 @@ import { FolderPlus, Settings, BookOpen, PlusCircle } from "lucide-react"
 import Link from "next/link"
 import ApiDirectory from "@/components/api-directory"
 import type { DirectoryData } from "@/lib/types"
+import ProjectHeader from "@/components/project/project-header"
 
 export default function ProjectPage({ params }: { params: { projectId: string } }) {
 
+  const projectId  = params.projectId;
 
   const directories: DirectoryData[] = [
     {
@@ -46,6 +48,7 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
   return (
     <div className="container py-10">
 
+      <ProjectHeader projectId={projectId} />
 
       <Tabs defaultValue="directories" className="w-full">
         <TabsList className="mb-6 p-1 bg-muted/50 rounded-full">
@@ -118,4 +121,3 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
     </div>
   )
 }
-
