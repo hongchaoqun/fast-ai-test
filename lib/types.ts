@@ -17,7 +17,8 @@ export interface ProjectData {
     id: string
     name: string
     description: string
-    apis: ApiData[]
+    apis: ApiData[],
+    filePath: string
   }
   
   

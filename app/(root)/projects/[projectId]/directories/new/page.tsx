@@ -11,19 +11,48 @@ import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import FileUpload from "@/components/file-upload"
+import axios from "axios"; // 引入 axios 用于发送请求
 
 export default function NewDirectoryPage({ params }: { params: { projectId: string } }) {
   const router = useRouter()
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
+  const [file, setFile] = useState<File | null>(null) // 新增文件状态
+  const [filePath, setFilePath] = useState("") // 新增文件路径状态
+
+  const PATH_VARIABLE = process.env.NEXT_PUBLIC_API_URL;
+
+  // 处理文件上传逻辑
+  const handleFileUpload = async (file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("path", file.name); // 添加文件路径参数
+
+    try {
+      const response = await axios.post(`${PATH_VARIABLE}/infra/file/upload`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.status === 200) {
+        console.log("File uploaded successfully:", response.data);
+        setFilePath(response.data.data); // 设置文件路径
+      } else {
+        console.error("File upload failed:", response.data);
+      }
+    } catch (error) {
+      console.error("Error during file upload:", error);
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // In a real app, this would save to a database
     console.log("Creating directory:", { name, description })
 
-    // Redirect back to the project page
-    router.push(`/projects/${params.projectId}`)
+    console.log("File path:", filePath); // 打印文件路径
   }
 
   return (
@@ -65,6 +94,8 @@ export default function NewDirectoryPage({ params }: { params: { projectId: stri
                 className="border-dashed focus:border-solid"
               />
             </div>
+            {/* 新增文件上传组件 */}
+            <FileUpload onFileChange={handleFileUpload} />
           </CardContent>
           <CardFooter className="flex justify-end space-x-2 border-t bg-muted/10 py-4">
             <Link href={`/projects/${params.projectId}`}>

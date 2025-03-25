@@ -11,38 +11,38 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
   const projectId  = params.projectId;
 
   const directories: DirectoryData[] = [
-    {
-      id: "1",
-      name: "Authentication",
-      description: "User authentication endpoints",
-      apis: [
-        { id: "1", name: "Login", method: "POST", path: "/api/auth/login" },
-        { id: "2", name: "Register", method: "POST", path: "/api/auth/register" },
-        { id: "3", name: "Refresh Token", method: "POST", path: "/api/auth/refresh" },
-      ],
-    },
-    {
-      id: "2",
-      name: "Products",
-      description: "Product management endpoints",
-      apis: [
-        { id: "4", name: "Get All Products", method: "GET", path: "/api/products" },
-        { id: "5", name: "Get Product", method: "GET", path: "/api/products/{id}" },
-        { id: "6", name: "Create Product", method: "POST", path: "/api/products" },
-        { id: "7", name: "Update Product", method: "PUT", path: "/api/products/{id}" },
-        { id: "8", name: "Delete Product", method: "DELETE", path: "/api/products/{id}" },
-      ],
-    },
-    {
-      id: "3",
-      name: "Orders",
-      description: "Order processing endpoints",
-      apis: [
-        { id: "9", name: "Get Orders", method: "GET", path: "/api/orders" },
-        { id: "10", name: "Create Order", method: "POST", path: "/api/orders" },
-        { id: "11", name: "Get Order Status", method: "GET", path: "/api/orders/{id}/status" },
-      ],
-    },
+    // {
+    //   id: "1",
+    //   name: "Authentication",
+    //   description: "User authentication endpoints",
+    //   apis: [
+    //     { id: "1", name: "Login", method: "POST", path: "/api/auth/login" },
+    //     { id: "2", name: "Register", method: "POST", path: "/api/auth/register" },
+    //     { id: "3", name: "Refresh Token", method: "POST", path: "/api/auth/refresh" },
+    //   ],
+    // },
+    // {
+    //   id: "2",
+    //   name: "Products",
+    //   description: "Product management endpoints",
+    //   apis: [
+    //     { id: "4", name: "Get All Products", method: "GET", path: "/api/products" },
+    //     { id: "5", name: "Get Product", method: "GET", path: "/api/products/{id}" },
+    //     { id: "6", name: "Create Product", method: "POST", path: "/api/products" },
+    //     { id: "7", name: "Update Product", method: "PUT", path: "/api/products/{id}" },
+    //     { id: "8", name: "Delete Product", method: "DELETE", path: "/api/products/{id}" },
+    //   ],
+    // },
+    // {
+    //   id: "3",
+    //   name: "Orders",
+    //   description: "Order processing endpoints",
+    //   apis: [
+    //     { id: "9", name: "Get Orders", method: "GET", path: "/api/orders" },
+    //     { id: "10", name: "Create Order", method: "POST", path: "/api/orders" },
+    //     { id: "11", name: "Get Order Status", method: "GET", path: "/api/orders/{id}/status" },
+    //   ],
+    // },
   ]
 
   return (
