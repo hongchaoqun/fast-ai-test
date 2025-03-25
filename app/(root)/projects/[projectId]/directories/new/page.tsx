@@ -47,6 +47,11 @@ export default function NewDirectoryPage({ params }: { params: { projectId: stri
     }
   };
 
+  // 处理文件删除逻辑
+  const handleFileRemove = () => {
+    setFilePath(""); // 清空文件路径
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // In a real app, this would save to a database
@@ -95,7 +100,7 @@ export default function NewDirectoryPage({ params }: { params: { projectId: stri
               />
             </div>
             {/* 新增文件上传组件 */}
-            <FileUpload onFileChange={handleFileUpload} />
+            <FileUpload onFileChange={handleFileUpload} onFileRemove={handleFileRemove} />
           </CardContent>
           <CardFooter className="flex justify-end space-x-2 border-t bg-muted/10 py-4">
             <Link href={`/projects/${params.projectId}`}>
