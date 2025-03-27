@@ -1,0 +1,221 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "system",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "管理后台 - 用户个人中心"
+    }
+  ],
+  "paths": {
+    "/admin-api/system/user/profile/update-avatar": {
+      "put": {
+        "summary": "上传用户个人头像",
+        "deprecated": false,
+        "description": "",
+        "operationId": "updateUserAvatar_1",
+        "tags": [
+          "管理后台 - 用户个人中心"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "avatarFile"
+                ],
+                "type": "object",
+                "properties": {
+                  "avatarFile": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "examples": {
+                "1": {
+                  "value": "",
+                  "description": ""
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResultString"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "上传用户个人头像",
+        "deprecated": false,
+        "description": "",
+        "operationId": "updateUserAvatar",
+        "tags": [
+          "管理后台 - 用户个人中心"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "avatarFile"
+                ],
+                "type": "object",
+                "properties": {
+                  "avatarFile": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "examples": {
+                "1": {
+                  "value": "",
+                  "description": ""
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResultString"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin-api/system/user/profile/update": {
+      "put": {
+        "summary": "修改用户个人信息",
+        "deprecated": false,
+        "description": "",
+        "operationId": "updateUserProfile",
+        "tags": [
+          "管理后台 - 用户个人中心"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserProfileUpdateReqVO"
+              },
+              "examples": {
+                "1": {
+                  "value": "",
+                  "description": ""
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResultBoolean"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin-api/system/user/profile/update-password": {
+      "put": {
+        "summary": "修改用户个人密码",
+        "deprecated": false,
+        "description": "",
+        "operationId": "updateUserProfilePassword",
+        "tags": [
+          "管理后台 - 用户个人中心"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserProfileUpdatePasswordReqVO"
+              },
+              "examples": {
+                "1": {
+                  "value": "",
+                  "description": ""
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResultBoolean"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin-api/system/user/profile/get": {
+      "get": {
+        "summary": "获得登录用户信息",
+        "deprecated": false,
+        "description": "",
+        "operationId": "profile",
+        "tags": [
+          "管理后台 - 用户个人中心"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResultUserProfileRespVO"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    }
+  }
+}

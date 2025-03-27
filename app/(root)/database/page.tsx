@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import DirectoryTable from "@/components/directory/directory-table"
 
 export default function DataTablePage() {
   return (
@@ -35,66 +36,7 @@ export default function DataTablePage() {
         </div>
       </div>
 
-      <div className="rounded-md border bg-card">
-        <Table>
-          <TableHeader className="bg-muted/50">
-            <TableRow>
-              <TableHead className="w-[250px]">名称</TableHead>
-              <TableHead>训练模式</TableHead>
-              <TableHead>数据量</TableHead>
-              <TableHead className="w-[200px]">创建/更新时间</TableHead>
-              <TableHead>状态</TableHead>
-              <TableHead>文件路径</TableHead>
-              <TableHead>启用</TableHead>
-              <TableHead className="w-[50px]"></TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell className="font-medium">
-                <div className="flex items-center gap-2">
-                  <FileIcon className="h-5 w-5 text-gray-500" />
-                  system.api.json
-                </div>
-              </TableCell>
-              <TableCell>直接分段</TableCell>
-              <TableCell>30</TableCell>
-              <TableCell>
-                <div className="flex flex-col">
-                  <span>2025-03-13 09:28</span>
-                  <span>2025-03-13 09:28</span>
-                </div>
-              </TableCell>
-              <TableCell>
-                <div className="flex items-center gap-1.5">
-                  <span className="flex h-2 w-2 rounded-full bg-green-500"></span>
-                  <span className="text-sm text-green-600">已完结</span>
-                </div>
-              </TableCell>
-              <TableCell>
-                <p>D:\data\api\system.api.json</p>
-              </TableCell>
-              <TableCell>
-                <Switch defaultChecked />
-              </TableCell>
-              <TableCell>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="h-8 w-8 p-0">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem>编辑</DropdownMenuItem>
-                    <DropdownMenuItem>复制</DropdownMenuItem>
-                    <DropdownMenuItem>删除</DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </div>
+      <DirectoryTable />
     </div>
   )
 }

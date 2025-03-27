@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { FolderPlus, Settings, BookOpen, PlusCircle } from "lucide-react"
@@ -5,45 +7,14 @@ import Link from "next/link"
 import ApiDirectory from "@/components/api-directory"
 import type { DirectoryData } from "@/lib/types"
 import ProjectHeader from "@/components/project/project-header"
+import { useEffect, useState } from "react"
+import DirectoryTable from "@/components/directory/directory-table"
+import DirectoryList from "@/components/directory/directory-list"
 
 export default function ProjectPage({ params }: { params: { projectId: string } }) {
 
   const projectId  = params.projectId;
 
-  const directories: DirectoryData[] = [
-    // {
-    //   id: "1",
-    //   name: "Authentication",
-    //   description: "User authentication endpoints",
-    //   apis: [
-    //     { id: "1", name: "Login", method: "POST", path: "/api/auth/login" },
-    //     { id: "2", name: "Register", method: "POST", path: "/api/auth/register" },
-    //     { id: "3", name: "Refresh Token", method: "POST", path: "/api/auth/refresh" },
-    //   ],
-    // },
-    // {
-    //   id: "2",
-    //   name: "Products",
-    //   description: "Product management endpoints",
-    //   apis: [
-    //     { id: "4", name: "Get All Products", method: "GET", path: "/api/products" },
-    //     { id: "5", name: "Get Product", method: "GET", path: "/api/products/{id}" },
-    //     { id: "6", name: "Create Product", method: "POST", path: "/api/products" },
-    //     { id: "7", name: "Update Product", method: "PUT", path: "/api/products/{id}" },
-    //     { id: "8", name: "Delete Product", method: "DELETE", path: "/api/products/{id}" },
-    //   ],
-    // },
-    // {
-    //   id: "3",
-    //   name: "Orders",
-    //   description: "Order processing endpoints",
-    //   apis: [
-    //     { id: "9", name: "Get Orders", method: "GET", path: "/api/orders" },
-    //     { id: "10", name: "Create Order", method: "POST", path: "/api/orders" },
-    //     { id: "11", name: "Get Order Status", method: "GET", path: "/api/orders/{id}/status" },
-    //   ],
-    // },
-  ]
 
   return (
     <div className="container py-10">
@@ -63,44 +34,10 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
           </TabsTrigger>
         </TabsList>
         <TabsContent value="directories">
-          <div className="space-y-6">
-            {directories.map((directory) => (
-              <ApiDirectory key={directory.id} directory={directory} projectId={params.projectId} />
-            ))}
-
-            {directories.length === 0 && (
-              <div className="text-center py-12 bg-muted/30 rounded-lg">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
-                  <FolderPlus className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-medium mb-2">No directories yet</h3>
-                <p className="text-muted-foreground mb-4 max-w-md mx-auto">
-                  Create your first directory to start organizing your API endpoints
-                </p>
-                <Link href={`/projects/${params.projectId}/directories/new`}>
-                  <Button className="rounded-full">
-                    <FolderPlus className="mr-2 h-4 w-4" />
-                    New Directory
-                  </Button>
-                </Link>
-              </div>
-            )}
-          </div>
+          <DirectoryList projectId={projectId} />
         </TabsContent>
         <TabsContent value="documentation">
-          <div className="bg-muted/30 p-8 rounded-lg text-center">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
-              <BookOpen className="h-8 w-8 text-primary" />
-            </div>
-            <h3 className="text-xl font-medium mb-2">Project Documentation</h3>
-            <p className="text-muted-foreground max-w-md mx-auto mb-4">
-              Add comprehensive documentation for your API project here.
-            </p>
-            <Button variant="outline" className="rounded-full">
-              <PlusCircle className="mr-2 h-4 w-4" />
-              Add Documentation
-            </Button>
-          </div>
+          <DirectoryTable />
         </TabsContent>
         <TabsContent value="environments">
           <div className="bg-muted/30 p-8 rounded-lg text-center">

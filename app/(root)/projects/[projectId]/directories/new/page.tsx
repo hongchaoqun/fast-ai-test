@@ -18,9 +18,8 @@ export default function NewDirectoryPage({ params }: { params: { projectId: stri
   const router = useRouter()
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
-  const [file, setFile] = useState<File | null>(null) // 新增文件状态
-  const [filePath, setFilePath] = useState("") // 新增文件路径状态
-
+  const [fileUrl, setFileUrl] = useState("") // 文件上传状态新增文件路径状态
+  
   const PATH_VARIABLE = process.env.NEXT_PUBLIC_API_URL;
 
   // 处理文件上传逻辑
@@ -38,7 +37,7 @@ export default function NewDirectoryPage({ params }: { params: { projectId: stri
 
       if (response.status === 200) {
         console.log("File uploaded successfully:", response.data);
-        setFilePath(response.data.data); // 设置文件路径
+        setFileUrl(response.data.data); // 设置文件路径
       } else {
         console.error("File upload failed:", response.data);
       }
@@ -49,15 +48,52 @@ export default function NewDirectoryPage({ params }: { params: { projectId: stri
 
   // 处理文件删除逻辑
   const handleFileRemove = () => {
-    setFilePath(""); // 清空文件路径
+    setFileUrl(""); // 清空文件路径
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     // In a real app, this would save to a database
     console.log("Creating directory:", { name, description })
+    console.log("File path:", fileUrl); // 打印文件路径
 
-    console.log("File path:", filePath); // 打印文件路径
+    e.preventDefault();
+
+    try {
+
+      const token = localStorage.getItem("token");
+      console.log(token);
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      };
+      const response = await fetch(`${PATH_VARIABLE}/api/directory-data/create`, {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify({
+          name,
+          description,
+          fileUrl,
+          projectId: params.projectId
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create directory");
+      }
+
+      const data = await response.json();
+      if (data.code === 0) {
+        alert("directory created successfully");
+        // Redirect to the project page (using a mock ID for demo)
+        router.push(`/projects/${params.projectId}`);
+      } else {
+        alert(data.msg || "Failed to create directory");
+      }
+    } catch (error) {
+      console.error("Error creating directory:", error);
+      alert("Error creating directory. Please try again.");
+    }
   }
 
   return (
