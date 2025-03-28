@@ -7,7 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { useEffect, useState } from "react"
 import axios from "axios"
-import { enableRecord } from "@/lib/javaBackApi"
+import { enableRecord } from "@/services/javaBackApi"
 
 export default function DirectoryTable() {
 

@@ -5,11 +5,13 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
+  const { login, loading, error } = useAuth();
 
   // 处理登录逻辑
   const handleLogin = async (event: { preventDefault: () => void; }) => {
@@ -18,7 +20,7 @@ export default function LoginPage() {
     const tenantName = '芋道源码';
     const rememberMe = true;
 
-      const PATH_VARIABLE = process.env.NEXT_PUBLIC_API_URL;
+    const PATH_VARIABLE = process.env.NEXT_PUBLIC_API_URL;
 
     try {
       const response = await fetch('/api/login', {
@@ -56,11 +58,16 @@ export default function LoginPage() {
     }
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    login(username, password);
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen mx-auto w-full bg-gradient-to-r from-blue-300 to-indigo-500">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center text-blue-500">登录</h2>
-        <form className="space-y-4" onSubmit={handleLogin}>
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <Label htmlFor="username" className="text-gray-700">账号</Label>
             <Input 
