@@ -1,0 +1,286 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "API Documentation",
+    "version" : "1.0"
+  },
+  "paths" : {
+    "/public/test/create" : {
+      "post" : {
+        "summary" : "创建项目",
+        "description" : "创建项目",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "required" : [ "description", "name" ],
+                "type" : "object",
+                "properties" : {
+                  "id" : {
+                    "type" : "integer",
+                    "description" : "编号",
+                    "format" : "int64",
+                    "example" : 29329
+                  },
+                  "name" : {
+                    "type" : "string",
+                    "description" : "项目名称",
+                    "example" : "张三"
+                  },
+                  "description" : {
+                    "type" : "string",
+                    "description" : "项目描述",
+                    "example" : "你猜"
+                  },
+                  "apiCount" : {
+                    "type" : "integer",
+                    "description" : "接口数量",
+                    "example" : 13261
+                  },
+                  "userId" : {
+                    "type" : "integer",
+                    "description" : "用户id",
+                    "format" : "int64",
+                    "example" : 21036
+                  }
+                },
+                "description" : ""
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "code" : {
+                      "type" : "integer",
+                      "description" : "错误码"
+                    },
+                    "data" : {
+                      "type" : "integer",
+                      "description" : "返回数据",
+                      "format" : "int64"
+                    },
+                    "msg" : {
+                      "type" : "string",
+                      "description" : "错误提示，用户可阅读"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/test/page" : {
+      "get" : {
+        "summary" : "获得项目分页",
+        "description" : "获得项目分页",
+        "parameters" : [ {
+          "name" : "pageNo",
+          "in" : "query",
+          "description" : "页码，从 1 开始",
+          "required" : true,
+          "schema" : {
+            "minimum" : 1,
+            "type" : "integer",
+            "nullable" : false,
+            "example" : 1,
+            "default" : 1
+          }
+        }, {
+          "name" : "pageSize",
+          "in" : "query",
+          "description" : "每页条数，最大值为 100",
+          "required" : true,
+          "schema" : {
+            "maximum" : 100,
+            "minimum" : 1,
+            "type" : "integer",
+            "nullable" : false,
+            "example" : 10,
+            "default" : 10
+          }
+        }, {
+          "name" : "name",
+          "in" : "query",
+          "description" : "项目名称",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "nullable" : false,
+            "example" : "张三",
+            "default" : "张三"
+          }
+        }, {
+          "name" : "description",
+          "in" : "query",
+          "description" : "项目描述",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "nullable" : false,
+            "example" : "你猜",
+            "default" : "你猜"
+          }
+        }, {
+          "name" : "apiCount",
+          "in" : "query",
+          "description" : "接口数量",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "nullable" : false,
+            "example" : 13261,
+            "default" : "13261"
+          }
+        }, {
+          "name" : "createTime",
+          "in" : "query",
+          "description" : "创建时间",
+          "required" : false,
+          "schema" : {
+            "type" : "array",
+            "nullable" : false,
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }, {
+          "name" : "userId",
+          "in" : "query",
+          "description" : "用户id",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64",
+            "nullable" : false,
+            "example" : 21036,
+            "default" : "21036"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "code" : {
+                      "type" : "integer",
+                      "description" : "错误码"
+                    },
+                    "data" : {
+                      "type" : "object",
+                      "properties" : {
+                        "list" : {
+                          "type" : "array",
+                          "description" : "数据",
+                          "items" : {
+                            "type" : "object",
+                            "properties" : {
+                              "id" : {
+                                "type" : "integer",
+                                "description" : "编号",
+                                "format" : "int64",
+                                "example" : 29329
+                              },
+                              "name" : {
+                                "type" : "string",
+                                "description" : "项目名称",
+                                "example" : "张三"
+                              },
+                              "description" : {
+                                "type" : "string",
+                                "description" : "项目描述",
+                                "example" : "你猜"
+                              },
+                              "apiCount" : {
+                                "type" : "integer",
+                                "description" : "接口数量",
+                                "example" : 13261
+                              },
+                              "createTime" : {
+                                "type" : "string",
+                                "description" : "创建时间"
+                              },
+                              "userId" : {
+                                "type" : "integer",
+                                "description" : "用户id",
+                                "format" : "int64",
+                                "example" : 21036
+                              }
+                            },
+                            "description" : "cn.iocoder.yudao.module.system.controller.admin.project.vo.ProjectRespVO"
+                          }
+                        },
+                        "total" : {
+                          "type" : "integer",
+                          "description" : "总量",
+                          "format" : "int64"
+                        }
+                      },
+                      "description" : "返回数据"
+                    },
+                    "msg" : {
+                      "type" : "string",
+                      "description" : "错误提示，用户可阅读"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "cn.iocoder.yudao.module.system.controller.admin.project.vo.ProjectRespVO" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "description" : "编号",
+            "format" : "int64",
+            "example" : 29329
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "项目名称",
+            "example" : "张三"
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "项目描述",
+            "example" : "你猜"
+          },
+          "apiCount" : {
+            "type" : "integer",
+            "description" : "接口数量",
+            "example" : 13261
+          },
+          "createTime" : {
+            "type" : "string",
+            "description" : "创建时间"
+          },
+          "userId" : {
+            "type" : "integer",
+            "description" : "用户id",
+            "format" : "int64",
+            "example" : 21036
+          }
+        },
+        "description" : "cn.iocoder.yudao.module.system.controller.admin.project.vo.ProjectRespVO"
+      }
+    }
+  }
+}

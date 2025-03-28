@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { useEffect, useState } from "react"
 import axios from "axios"
+import { enableRecord } from "@/lib/javaBackApi"
 
 export default function DirectoryTable() {
 
@@ -15,6 +16,8 @@ export default function DirectoryTable() {
     const [loading, setLoading] = useState(true);
     const PATH_VARIABLE = process.env.NEXT_PUBLIC_API_URL;
     const [selectedFilePath, setSelectedFilePath] = useState<string | null>(null);
+
+    const token = localStorage.getItem('token');
 
     // 调用分页接口获取文件数据
     const fetchFiles = async () => {
@@ -50,9 +53,12 @@ export default function DirectoryTable() {
         fetchFiles();
     }, []);
 
-    const handleTrainClick = async (filePath: string) => {
+    const handleTrainClick = async (filePath: string, fileId: number, enabled: number) => {
+
+        if(enabled === 1){
+            return; // 如果已经启用，则不执行任何操作
+        }
         setSelectedFilePath(filePath);
-    
         console.log("Selected file path:", filePath);
         try {
           const response = await fetch('/api/project/database', {
@@ -60,7 +66,7 @@ export default function DirectoryTable() {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ filePath }),
+            body: JSON.stringify({ filePath,fileId }),
           });
     
           if (!response.ok) {
@@ -69,7 +75,12 @@ export default function DirectoryTable() {
     
           const data = await response.json();
           if (data.success) {
-            fetchFiles(); // 刷新表格数据
+                // // 训练成功，更新表格数据
+                console.log("Training successful, 这里的token。。。。。。", token);
+                const res = await enableRecord(fileId, token); 
+                if (res == 0) {
+                    fetchFiles(); // 刷新表格数据
+                }
           } else {
             alert('训练失败，请稍后再试');
           }
@@ -79,7 +90,8 @@ export default function DirectoryTable() {
         } finally {
           setSelectedFilePath(null);
         }
-      };
+
+    };
 
     return (
         <>
@@ -142,7 +154,7 @@ export default function DirectoryTable() {
                                                 </Button>
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent align="end">
-                                                <DropdownMenuItem onClick={() => handleTrainClick(file.url)}>训练</DropdownMenuItem>
+                                                <DropdownMenuItem onClick={() => handleTrainClick(file.url, file.id, file.enabled)}>训练</DropdownMenuItem>
                                             </DropdownMenuContent>
                                         </DropdownMenu>
                                     </TableCell>

@@ -40,7 +40,7 @@ export async function POST(req: Request) {
 
     // 返回到页面
     const body = await req.json();
-    console.log(body.filePath);
+    console.log(" body 文件路径", body.filePath);
     const filePath = body.filePath;
     if(!filePath) {
         return new Response("请上传文件", { status: 400 });
@@ -78,8 +78,37 @@ export async function POST(req: Request) {
     console.log("文件已下载到:", localFilePath);
 
     // 示例：加载文件内容
-    const fileContent = fs.readFileSync(localFilePath, 'utf-8');
+    // const fileContent = fs.readFileSync(localFilePath, 'utf-8');
     // console.log("文件内容:", fileContent);
+
+    
+    // 文档加载
+    const loader = new JSONLoader(localFilePath);
+    const docs = await loader.load();
+    console.log("文档加载");
+    console.log(docs);
+
+    // 文档拆分
+    const splitter = new RecursiveCharacterTextSplitter({
+        chunkSize: 1000,
+        chunkOverlap: 200,
+    });
+    const allSplits = await splitter.splitDocuments(docs);
+    console.log("文档拆分");
+    console.log(`Split blog post into ${allSplits.length} sub-documents.`);
+    
+
+    // 文档嵌入
+    // const vectorStore = new MemoryVectorStore(embeddings);
+    if(vectorStore){
+        await vectorStore.addDocuments(allSplits);
+        console.log("文档嵌入成功");
+        // 成功后处理数据，把enabled设置为true
+
+    }else{
+        console.log("vectorStore is null");
+        return new NextResponse('vectorStore is null，文档嵌入失败', { status: 500 });
+    }
 
   } catch (error) {
     console.error('文件处理失败:', error);
@@ -91,34 +120,6 @@ export async function POST(req: Request) {
     //   console.log("文件已删除:", localFilePath);
     // }
   }
-
-
-    // // 文档加载
-    // const loader = new JSONLoader("D:\\knowledge\\system.openapi.json");
-    // const docs = await loader.load();
-    // console.log("文档加载");
-    // console.log(docs);
-
-    // // 文档拆分
-    // const splitter = new RecursiveCharacterTextSplitter({
-    //     chunkSize: 1000,
-    //     chunkOverlap: 200,
-    // });
-    // const allSplits = await splitter.splitDocuments(docs);
-    // console.log("文档拆分");
-    // console.log(`Split blog post into ${allSplits.length} sub-documents.`);
-    
-
-    // // 文档嵌入
-    // const embeddings = new AlibabaTongyiEmbeddings({});
-    // // const vectorStore = new MemoryVectorStore(embeddings);
-    // if(vectorStore){
-    //     await vectorStore.addDocuments(allSplits);
-    // }else{
-    //     console.log("vectorStore is null");
-    //     return new NextResponse('vectorStore is null，文档嵌入失败', { status: 500 });
-    // }
-
 
   const data = {
     filePath: body.filePath,
