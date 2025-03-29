@@ -3,9 +3,6 @@
 import { Button } from "@/components/ui/button"
 import { PlusCircle, Frame } from "lucide-react"
 import Link from "next/link"
-import ProjectCard from "@/components/project/project-card"
-import { ProjectData } from "@/lib/types"
-import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import ProjectList from "@/components/project/project-list"
 

@@ -31,8 +31,6 @@ export default function ProjectList() {
   const [pageSize, setPageSize] = useState(100);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { accessToken } = useAuthStore();
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     fetchProjects();
@@ -45,7 +43,7 @@ export default function ProjectList() {
     try {
       const response = await getProjects({
         pageNo: 1,
-        pageSize: 10,
+        pageSize: 100,
       });
 
       if (response.code === 0) {
