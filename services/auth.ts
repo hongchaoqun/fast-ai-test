@@ -20,27 +20,6 @@ interface LoginResponse {
   msg: string;
 }
 
-// 请求拦截器
-axios.interceptors.request.use((config) => {
-    const { accessToken } = useAuthStore.getState();
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
-    }
-    return config;
-  });
-  
-// 响应拦截器 - 处理 token 过期等情况
-axios.interceptors.response.use(
-(response) => response,
-(error) => {
-    if (error.response?.status === 401) {
-    useAuthStore.getState().logout();
-    // 可以在这里跳转到登录页
-    }
-    return Promise.reject(error);
-}
-);
-
 export const authService = {
   async login(params: LoginParams): Promise<LoginResponse> {
     try {

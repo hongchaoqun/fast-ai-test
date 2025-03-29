@@ -36,6 +36,7 @@
     "react": "^18",
     "react-dom": "^18",
     "redis": "^4.7.0",
+    "sonner": "^2.0.2",
     "tailwind-merge": "^3.0.2",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^11.1.0"
