@@ -10,10 +10,24 @@ import ProjectHeader from "@/components/project/project-header"
 import { useEffect, useState } from "react"
 import DirectoryTable from "@/components/directory/directory-table"
 import DirectoryList from "@/components/directory/directory-list"
+import AddEnvironmentModal from "@/components/project/add-environment-modal"
+import { toast } from "sonner"
 
 export default function ProjectPage({ params }: { params: { projectId: string } }) {
 
   const projectId  = params.projectId;
+
+  const [environments, setEnvironments] = useState<any[]>([])
+
+  const handleEnvironmentAdded = (newEnv: {
+    id: number
+    name: string
+    baseUrl: string
+    variables: { key: string; value: string }[]
+  }) => {
+    setEnvironments([...environments, newEnv])
+    toast.success(`环境 ${newEnv.name} 已添加`)
+  }
 
 
   return (
@@ -40,18 +54,23 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
           <DirectoryTable />
         </TabsContent>
         <TabsContent value="environments">
-          <div className="bg-muted/30 p-8 rounded-lg text-center">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
-              <Settings className="h-8 w-8 text-primary" />
+        <div className="space-y-6">
+            {/* 环境列表将在这里显示 */}
+            <div className="flex justify-end mb-4">
+              <AddEnvironmentModal projectId={params.projectId} onEnvironmentAdded={handleEnvironmentAdded} />
             </div>
-            <h3 className="text-xl font-medium mb-2">Environment Variables</h3>
-            <p className="text-muted-foreground max-w-md mx-auto mb-4">
-              Configure different environments (development, staging, production) for testing your APIs.
-            </p>
-            <Button variant="outline" className="rounded-full">
-              <PlusCircle className="mr-2 h-4 w-4" />
-              Add Environment
-            </Button>
+
+            {/* 环境列表的空状态 */}
+            <div className="bg-muted/30 p-8 rounded-lg text-center">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
+                <Settings className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="text-xl font-medium mb-2">Environment Variables</h3>
+              <p className="text-muted-foreground max-w-md mx-auto mb-4">
+                Configure different environments (development, staging, production) for testing your APIs.
+              </p>
+              <AddEnvironmentModal projectId={params.projectId} onEnvironmentAdded={handleEnvironmentAdded} />
+            </div>
           </div>
         </TabsContent>
       </Tabs>
