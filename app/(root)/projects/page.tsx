@@ -8,13 +8,6 @@ import ProjectList from "@/components/project/project-list"
 
 export default function ProjectsPage() {
 
-  let pageToken;
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    console.log(token);
-    pageToken = token;
-  }, []);
-
   return (
     <div className="container py-10">
       <div className="flex justify-between items-center mb-8">

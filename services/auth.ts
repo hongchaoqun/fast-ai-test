@@ -24,7 +24,7 @@ export const authService = {
   async login(params: LoginParams): Promise<LoginResponse> {
     try {
       const response = await axios.post<LoginResponse>(
-        `${API_BASE_URL}/admin-api/system/auth/login`,
+        `${API_BASE_URL}admin-api/system/auth/login`,
         params,
         {
           headers: {

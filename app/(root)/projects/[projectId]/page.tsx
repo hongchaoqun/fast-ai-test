@@ -10,8 +10,9 @@ import ProjectHeader from "@/components/project/project-header"
 import { useEffect, useState } from "react"
 import DirectoryTable from "@/components/directory/directory-table"
 import DirectoryList from "@/components/directory/directory-list"
-import AddEnvironmentModal from "@/components/project/add-environment-modal"
+import AddEnvironmentModal from "@/components/project/environment/add-environment-modal"
 import { toast } from "sonner"
+import EnvironmentList from "@/components/project/environment/environment-list"
 
 export default function ProjectPage({ params }: { params: { projectId: string } }) {
 
@@ -54,24 +55,7 @@ export default function ProjectPage({ params }: { params: { projectId: string } 
           <DirectoryTable />
         </TabsContent>
         <TabsContent value="environments">
-        <div className="space-y-6">
-            {/* 环境列表将在这里显示 */}
-            <div className="flex justify-end mb-4">
-              <AddEnvironmentModal projectId={params.projectId} onEnvironmentAdded={handleEnvironmentAdded} />
-            </div>
-
-            {/* 环境列表的空状态 */}
-            <div className="bg-muted/30 p-8 rounded-lg text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
-                <Settings className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="text-xl font-medium mb-2">Environment Variables</h3>
-              <p className="text-muted-foreground max-w-md mx-auto mb-4">
-                Configure different environments (development, staging, production) for testing your APIs.
-              </p>
-              <AddEnvironmentModal projectId={params.projectId} onEnvironmentAdded={handleEnvironmentAdded} />
-            </div>
-          </div>
+          <EnvironmentList projectId={params.projectId} />
         </TabsContent>
       </Tabs>
     </div>

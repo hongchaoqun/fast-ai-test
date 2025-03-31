@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
-import { ArrowLeft, Play, Save, Plus } from "lucide-react"
+import { ArrowLeft, Play, Save, Plus, Code } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 
@@ -75,6 +75,10 @@ export default function ApiDetailPage({
           <p className="text-muted-foreground mt-1 font-mono text-sm">{apiData.path}</p>
         </div>
         <div className="flex gap-2">
+          <Button variant="outline" className="rounded-full" onClick={() => {}}>
+              <Code className="mr-2 h-4 w-4" />
+              Mock
+          </Button>
           <Button variant="outline" className="rounded-full">
             <Save className="mr-2 h-4 w-4" />
             Save
