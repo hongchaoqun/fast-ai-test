@@ -4,6 +4,7 @@ import React from 'react';
 import { ReactFlow } from '@xyflow/react';
  
 import '@xyflow/react/dist/style.css';
+import { BaseNode } from '@/components/base-node';
 
 const initialNodes = [
     { id: '1', position: { x: 0, y: 0 }, data: { label: '1' } },
@@ -15,8 +16,8 @@ const initialNodes = [
 export default function FlowPage() {
 
     return (
-        <div style={{ width: '100vw', height: '100vh' }}>
-          <ReactFlow nodes={initialNodes} edges={initialEdges} />
+        <div className="w-screen h-screen p-8">
+          <BaseNode selected={false}>Hi! 👋</BaseNode>
         </div>
       );
 }
