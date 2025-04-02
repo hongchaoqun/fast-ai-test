@@ -8,39 +8,30 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { enableRecord } from "@/services/javaBackApi"
+import { getDirectorsTable } from "@/services/directorService"
 
 export default function DirectoryTable() {
 
     // 定义 state 来存储文件数据
     const [files, setFiles] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
-    const PATH_VARIABLE = process.env.NEXT_PUBLIC_API_URL;
     const [selectedFilePath, setSelectedFilePath] = useState<string | null>(null);
 
     const token = localStorage.getItem('token');
 
     // 调用分页接口获取文件数据
     const fetchFiles = async () => {
-        const token = localStorage.getItem("token");
-        const headers = {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-        };
         try {
-            const response = await axios.get(`${PATH_VARIABLE}/api/file/page`, {
-                params: {
-                    pageNo: 1, // 第一页
-                    pageSize: 10, // 每页 10 条
-                },
-                headers: headers
-            });
-
+            const response = await getDirectorsTable({
+                pageNo: 1,
+                pageSize: 10
+            })
             // 检查返回的响应
-            if (response.status === 200 && response.data.code === 0) {
-                const data = response.data.data;
+            if (response.code === 0) {
+                const data = response.data;
                 setFiles(data.list);
             } else {
-                console.error("Failed to fetch files:", response.data.msg);
+                console.error("Failed to fetch files:", response.msg);
             }
         } catch (error) {
             console.error("Error fetching files:", error);

@@ -1,18 +1,15 @@
 import { NextResponse } from 'next/server';
 import { JSONLoader } from "langchain/document_loaders/fs/json";
-import { ChatAlibabaTongyi } from "@langchain/community/chat_models/alibaba_tongyi";
-import { HumanMessage } from "@langchain/core/messages";
 import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
 import { AlibabaTongyiEmbeddings } from "@langchain/community/embeddings/alibaba_tongyi";
+import { NeonPostgres } from "@langchain/community/vectorstores/neon";
+
+import { ChatAlibabaTongyi } from "@langchain/community/chat_models/alibaba_tongyi";
 import { Document } from "@langchain/core/documents";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { pull } from "langchain/hub";
 import { Annotation, StateGraph } from "@langchain/langgraph";
-import { NeonPostgres } from "@langchain/community/vectorstores/neon";
-import { MemoryVectorStore } from "langchain/vectorstores/memory";
 // import { vectorStore } from '../../../../middleware'; // 导入中间件中的 
-
-import https from 'https';
 import fs from 'fs';
 import path from 'path';
 import axios from 'axios';
@@ -86,7 +83,6 @@ export async function POST(req: Request) {
     const loader = new JSONLoader(localFilePath);
     const docs = await loader.load();
     console.log("文档加载");
-    console.log(docs);
 
     // 文档拆分
     const splitter = new RecursiveCharacterTextSplitter({
@@ -104,6 +100,63 @@ export async function POST(req: Request) {
         await vectorStore.addDocuments(allSplits);
         console.log("文档嵌入成功");
         // 成功后处理数据，把enabled设置为true
+
+
+          // Define prompt for question-answering
+    const promptTemplate = await pull<ChatPromptTemplate>("rlm/rag-prompt");
+
+    // Define state for application
+    const InputStateAnnotation = Annotation.Root({
+        question: Annotation<string>,
+    });
+
+    const StateAnnotation = Annotation.Root({
+        question: Annotation<string>,
+        context: Annotation<Document[]>,
+        answer: Annotation<string>,
+    });
+   
+    // Define application steps
+    const retrieve = async (state: typeof InputStateAnnotation.State) => {
+        if(vectorStore){
+            const retrievedDocs = await vectorStore.similaritySearch(state.question)
+            return { context: retrievedDocs };
+        }
+        return { context: null };
+    };
+
+    const qwenTurbo = new ChatAlibabaTongyi({
+        model: "qwen-plus", // Available models: qwen-turbo, qwen-plus, qwen-max
+        temperature: 0,
+        alibabaApiKey: process.env.ALIBABA_API_KEY, // In Node.js defaults to process.env.ALIBABA_API_KEY
+    });
+   
+   
+    const generate = async (state: typeof StateAnnotation.State) => {
+        const docsContent = state.context.map(doc => doc.pageContent).join("\n");
+        const messages = await promptTemplate.invoke({ question: state.question, context: docsContent });
+        const response = await qwenTurbo.invoke(messages);
+        return { answer: response.content };
+    };
+
+   
+    // Compile application and test
+    const graph = new StateGraph(StateAnnotation)
+    .addNode("retrieve", retrieve)
+    .addNode("generate", generate)
+    .addEdge("__start__", "retrieve")
+    .addEdge("retrieve", "generate")
+    .addEdge("generate", "__end__")
+    .compile();
+
+    // let inputs = { question: `请参考文档帮我模拟生成/admin-api/system/user/profile/update这个接口的请求参数，并返回json格式`};
+    let inputs = { question: `请参考文档帮我模拟生成/public/test/create这个接口的请求参数,根据/public/test/create 接口的请求参数requestBody生成我要的结果，并返回json格式`};
+    // let inputs = { question: `请从知识库中帮我获取一个接口的请求的参数，接口路径为${body.path}，并返回json格式`};
+
+    const result = await graph.invoke(inputs);
+    console.log(result.answer);
+
+
 
     }else{
         console.log("vectorStore is null");

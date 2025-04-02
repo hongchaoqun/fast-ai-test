@@ -32,3 +32,12 @@ export const getDirectors = async (params: {
   const response = await api.get('/api/directory-data/page', { params });
   return response.data;
 };
+
+// 获取目录列表
+export const getDirectorsTable = async (params: {
+  pageNo: number;
+  pageSize: number;
+}) => {
+  const response = await api.get('/api/file/page', { params });
+  return response.data;
+};

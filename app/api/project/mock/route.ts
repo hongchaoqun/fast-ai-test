@@ -45,7 +45,7 @@ export async function POST(req: Request) {
 
     const qwenTurbo = new ChatAlibabaTongyi({
         model: "qwen-plus", // Available models: qwen-turbo, qwen-plus, qwen-max
-        temperature: 1,
+        temperature: 0,
         alibabaApiKey: process.env.ALIBABA_API_KEY, // In Node.js defaults to process.env.ALIBABA_API_KEY
     });
    
@@ -67,8 +67,8 @@ export async function POST(req: Request) {
     .addEdge("generate", "__end__")
     .compile();
 
-    let inputs = { question: `请参考文档帮我模拟生成/admin-api/system/user/profile/update这个接口的请求参数，并返回json格式`};
-    // let inputs = { question: `请参考文档帮我模拟生成${body.path}这个接口的请求参数，并返回json格式`};
+    // let inputs = { question: `请参考文档帮我模拟生成/admin-api/system/user/profile/update这个接口的请求参数，并返回json格式`};
+    let inputs = { question: `请参考文档帮我模拟生成${body.path}这个接口的请求参数，并返回json格式`};
     // let inputs = { question: `请从知识库中帮我获取一个接口的请求的参数，接口路径为${body.path}，并返回json格式`};
 
     const result = await graph.invoke(inputs);

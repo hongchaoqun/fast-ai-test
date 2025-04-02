@@ -4,17 +4,14 @@ import ApiRequest from "@/components/apiData/api-request"
 import ApiResponse from "@/components/apiData/api-response"
 import ApiTitle from "@/components/apiData/api-title"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Textarea } from "@/components/ui/textarea"
 import { ApiDetailData } from "@/lib/types"
 import { getApiData } from "@/services/apiDataService"
-import { getMockData, MockDataRequest } from "@/services/nextBackApi"
+import { getMockData } from "@/services/nextBackApi"
 import { useAuthStore } from "@/store/authStore"
 import axios from "axios"
-import { ArrowLeft, Play, Save, Plus, Code, Frame, Loader2 } from "lucide-react"
+import { ArrowLeft, Play, Save, Plus, Code, Frame, Loader2, FileText } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
@@ -46,6 +43,7 @@ export default function ApiDetailPage({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isMockLoading, setIsMockLoading] = useState(false);
+  const [docDialogOpen, setDocDialogOpen] = useState(false)
 
   useEffect(() => {
     fetchApiData();
@@ -174,9 +172,9 @@ export default function ApiDetailPage({
                 )}
                 Mock
             </Button>
-            <Button variant="outline" className="rounded-full">
-                <Save className="mr-2 h-4 w-4" />
-                Save
+            <Button variant="outline" className="rounded-full" onClick={() => setDocDialogOpen(true)}>
+              <FileText className="mr-2 h-4 w-4" />
+              View Documentation
             </Button>
           </div>
       </div>
